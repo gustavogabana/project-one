@@ -2,7 +2,9 @@ import { useState } from "react";
 import { AuthContext } from "./AuthContext";
 import type { User } from "./AuthContext";
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+type Props = { children: React.ReactNode };
+
+export function AuthProvider({ children }: Props) {
     const [user, setUser] = useState<User | null>(null);
 
     const login = (email: string) => {
