@@ -1,10 +1,14 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite + Tailwind
 
 Project created through Vite using the React + TS template:
 
 ```bash
 npm create vite@latest project-one -- --template react-ts
 ```
+
+## Added Tailwind
+
+Project has Tailwind, version ^4.1.18, no config file.
 
 ## Context API: Context, Provider, custom hook
 
@@ -41,3 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 Create a useX.ts file that encapsulates de use of the context, as good practice.
 
 Wraps the App component in main.tsx so that the data stored in the context is available throughout the application. If global access is not required, wrap only the components that need access to the context.
+
+## Configurations
+
+Disabled css.lint.unknownAtRules on VSCode.
