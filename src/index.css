@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Enables the 'dark:' variant when the '.dark' class is present.
+  - '&' targets the current element.
+  - ':where' keeps specificity low so styles are easy to override.
+  - '.dark, .dark *' ensures it works when applied to the <html> tag or any parent.
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-brand: Inter, sans-serif;
 }
