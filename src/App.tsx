@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useTheme } from "./hooks/useTheme";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { theme, changeTheme } = useTheme();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen bg-white dark:bg-zinc-950 transition-colors duration-300 pt-50">
+      <div className="flex gap-1.5 items-center justify-center mx-auto">
+        <p className="font-black text-slate-900 dark:text-white">Template</p>
+        <p className="font-mono text-slate-600 dark:text-slate-400">with Tailwind</p>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      <button 
+        type="button" 
+        className="mx-auto block mt-4 cursor-pointer p-2.5 
+                   bg-slate-800 text-white rounded-md 
+                   hover:bg-slate-700 active:scale-95
+                   dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 
+                   transition-all"
+        onClick={changeTheme}
+      >
+        Change theme ({theme})
+      </button>
+    </div>
+  );
 }
 
-export default App
+export default App;
