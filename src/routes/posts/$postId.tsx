@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/posts/$postId")({
     component: RouteComponent,
     loader: async ({ params }) => {
-        throw new Error();
+        //throw new Error();
         await new Promise((resolve) => setTimeout(resolve, 1000));
         return {
             postId: params.postId
