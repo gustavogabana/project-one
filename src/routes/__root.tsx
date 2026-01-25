@@ -6,7 +6,7 @@ const RootLayout = () => (
     <div className="p-2 flex gap-2">
       <Link to="/" className="[&.active]:font-bold">
         Home
-      </Link>{' '}
+      </Link>
       <Link to="/about" className="[&.active]:font-bold">
         About
       </Link>
@@ -15,6 +15,9 @@ const RootLayout = () => (
         search={{ query: "post 1" }}
         className="[&.active]:font-bold">
         Post
+      </Link>
+      <Link to="/form" className="[&.active]:font-bold">
+        Form
       </Link>
     </div>
     <hr />
