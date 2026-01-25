@@ -20,4 +20,4 @@ function RouteComponent() {
             {`Hello, ${postId}!`}
         </div>
     );
-}
+};

@@ -25,4 +25,4 @@ function Posts() {
             ))}
         </div>
     );
-}
+};
