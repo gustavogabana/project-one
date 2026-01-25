@@ -50,6 +50,14 @@ Wraps the App component in main.tsx so that the data stored in the context is av
 
 Added TanStack Router v1 Lib used for routing on React/Vite apps.
 
+## Added React Hook Form + Zod
+
+Added RHF + Zod + Resolvers to create and manage forms.
+
+```bash
+npm instal react-hook-form zod @hookform/resolvers
+```
+
 ## Configurations
 
 Disabled css.lint.unknownAtRules on VSCode.

@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     tanstackRouter({
       target: 'react',
-      autoCodeSplitting: true,
+      autoCodeSplitting: true, // no need to .lazy the files to manual code split
     }),
     react(),
     tailwindcss()
