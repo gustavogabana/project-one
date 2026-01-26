@@ -22,6 +22,9 @@ const RootLayout = () => (
       <Link to="/card" className="[&.active]:font-bold">
         Card
       </Link>
+      <Link to="/todos" className="[&.active]:font-bold">
+        Todos
+      </Link>
     </div>
     <hr />
     <Outlet />

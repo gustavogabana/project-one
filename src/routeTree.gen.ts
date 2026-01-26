@@ -9,22 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as CardRouteImport } from './routes/card'
 import { Route as PostsRouteRouteImport } from './routes/posts/route'
+import { Route as TodosIndexRouteImport } from './routes/todos/index'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as FormIndexRouteImport } from './routes/form/index'
+import { Route as CardIndexRouteImport } from './routes/card/index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as HomeIndexRouteImport } from './routes/_home/index'
 import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
 
-const CardRoute = CardRouteImport.update({
-  id: '/card',
-  path: '/card',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PostsRouteRoute = PostsRouteRouteImport.update({
   id: '/posts',
   path: '/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TodosIndexRoute = TodosIndexRouteImport.update({
+  id: '/todos/',
+  path: '/todos/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostsIndexRoute = PostsIndexRouteImport.update({
@@ -35,6 +36,11 @@ const PostsIndexRoute = PostsIndexRouteImport.update({
 const FormIndexRoute = FormIndexRouteImport.update({
   id: '/form/',
   path: '/form/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CardIndexRoute = CardIndexRouteImport.update({
+  id: '/card/',
+  path: '/card/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutIndexRoute = AboutIndexRouteImport.update({
@@ -55,76 +61,89 @@ const PostsPostIdRoute = PostsPostIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/posts': typeof PostsRouteRouteWithChildren
-  '/card': typeof CardRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/': typeof HomeIndexRoute
   '/about/': typeof AboutIndexRoute
+  '/card/': typeof CardIndexRoute
   '/form/': typeof FormIndexRoute
   '/posts/': typeof PostsIndexRoute
+  '/todos/': typeof TodosIndexRoute
 }
 export interface FileRoutesByTo {
-  '/card': typeof CardRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/': typeof HomeIndexRoute
   '/about': typeof AboutIndexRoute
+  '/card': typeof CardIndexRoute
   '/form': typeof FormIndexRoute
   '/posts': typeof PostsIndexRoute
+  '/todos': typeof TodosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/posts': typeof PostsRouteRouteWithChildren
-  '/card': typeof CardRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/_home/': typeof HomeIndexRoute
   '/about/': typeof AboutIndexRoute
+  '/card/': typeof CardIndexRoute
   '/form/': typeof FormIndexRoute
   '/posts/': typeof PostsIndexRoute
+  '/todos/': typeof TodosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/posts'
-    | '/card'
     | '/posts/$postId'
     | '/'
     | '/about/'
+    | '/card/'
     | '/form/'
     | '/posts/'
+    | '/todos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/card' | '/posts/$postId' | '/' | '/about' | '/form' | '/posts'
+  to:
+    | '/posts/$postId'
+    | '/'
+    | '/about'
+    | '/card'
+    | '/form'
+    | '/posts'
+    | '/todos'
   id:
     | '__root__'
     | '/posts'
-    | '/card'
     | '/posts/$postId'
     | '/_home/'
     | '/about/'
+    | '/card/'
     | '/form/'
     | '/posts/'
+    | '/todos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   PostsRouteRoute: typeof PostsRouteRouteWithChildren
-  CardRoute: typeof CardRoute
   HomeIndexRoute: typeof HomeIndexRoute
   AboutIndexRoute: typeof AboutIndexRoute
+  CardIndexRoute: typeof CardIndexRoute
   FormIndexRoute: typeof FormIndexRoute
+  TodosIndexRoute: typeof TodosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/card': {
-      id: '/card'
-      path: '/card'
-      fullPath: '/card'
-      preLoaderRoute: typeof CardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/posts': {
       id: '/posts'
       path: '/posts'
       fullPath: '/posts'
       preLoaderRoute: typeof PostsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/todos/': {
+      id: '/todos/'
+      path: '/todos'
+      fullPath: '/todos/'
+      preLoaderRoute: typeof TodosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/posts/': {
@@ -139,6 +158,13 @@ declare module '@tanstack/react-router' {
       path: '/form'
       fullPath: '/form/'
       preLoaderRoute: typeof FormIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/card/': {
+      id: '/card/'
+      path: '/card'
+      fullPath: '/card/'
+      preLoaderRoute: typeof CardIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about/': {
@@ -181,10 +207,11 @@ const PostsRouteRouteWithChildren = PostsRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   PostsRouteRoute: PostsRouteRouteWithChildren,
-  CardRoute: CardRoute,
   HomeIndexRoute: HomeIndexRoute,
   AboutIndexRoute: AboutIndexRoute,
+  CardIndexRoute: CardIndexRoute,
   FormIndexRoute: FormIndexRoute,
+  TodosIndexRoute: TodosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
