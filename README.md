@@ -58,6 +58,10 @@ Added RHF + Zod + Resolvers to create and manage forms.
 npm instal react-hook-form zod @hookform/resolvers
 ```
 
+## Added DaisyUI
+
+Added DaisyUI v5.5.14 as main UI lib.
+
 ## Configurations
 
 Disabled css.lint.unknownAtRules on VSCode.

@@ -19,6 +19,9 @@ const RootLayout = () => (
       <Link to="/form" className="[&.active]:font-bold">
         Form
       </Link>
+      <Link to="/card" className="[&.active]:font-bold">
+        Card
+      </Link>
     </div>
     <hr />
     <Outlet />

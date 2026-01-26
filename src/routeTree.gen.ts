@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as CardRouteImport } from './routes/card'
 import { Route as PostsRouteRouteImport } from './routes/posts/route'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as FormIndexRouteImport } from './routes/form/index'
@@ -16,6 +17,11 @@ import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as HomeIndexRouteImport } from './routes/_home/index'
 import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
 
+const CardRoute = CardRouteImport.update({
+  id: '/card',
+  path: '/card',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsRouteRoute = PostsRouteRouteImport.update({
   id: '/posts',
   path: '/posts',
@@ -49,6 +55,7 @@ const PostsPostIdRoute = PostsPostIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/posts': typeof PostsRouteRouteWithChildren
+  '/card': typeof CardRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/': typeof HomeIndexRoute
   '/about/': typeof AboutIndexRoute
@@ -56,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/posts/': typeof PostsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/card': typeof CardRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/': typeof HomeIndexRoute
   '/about': typeof AboutIndexRoute
@@ -65,6 +73,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/posts': typeof PostsRouteRouteWithChildren
+  '/card': typeof CardRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/_home/': typeof HomeIndexRoute
   '/about/': typeof AboutIndexRoute
@@ -75,16 +84,18 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/posts'
+    | '/card'
     | '/posts/$postId'
     | '/'
     | '/about/'
     | '/form/'
     | '/posts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/posts/$postId' | '/' | '/about' | '/form' | '/posts'
+  to: '/card' | '/posts/$postId' | '/' | '/about' | '/form' | '/posts'
   id:
     | '__root__'
     | '/posts'
+    | '/card'
     | '/posts/$postId'
     | '/_home/'
     | '/about/'
@@ -94,6 +105,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   PostsRouteRoute: typeof PostsRouteRouteWithChildren
+  CardRoute: typeof CardRoute
   HomeIndexRoute: typeof HomeIndexRoute
   AboutIndexRoute: typeof AboutIndexRoute
   FormIndexRoute: typeof FormIndexRoute
@@ -101,6 +113,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/card': {
+      id: '/card'
+      path: '/card'
+      fullPath: '/card'
+      preLoaderRoute: typeof CardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/posts': {
       id: '/posts'
       path: '/posts'
@@ -162,6 +181,7 @@ const PostsRouteRouteWithChildren = PostsRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   PostsRouteRoute: PostsRouteRouteWithChildren,
+  CardRoute: CardRoute,
   HomeIndexRoute: HomeIndexRoute,
   AboutIndexRoute: AboutIndexRoute,
   FormIndexRoute: FormIndexRoute,

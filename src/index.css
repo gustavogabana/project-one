@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui"; /* DaisyUI */
 
 /* Enables the 'dark:' variant when the '.dark' class is present.
   - '&' targets the current element.
