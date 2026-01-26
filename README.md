@@ -50,6 +50,10 @@ Wraps the App component in main.tsx so that the data stored in the context is av
 
 Added TanStack Router v1 Lib used for routing on React/Vite apps.
 
+## Added TanStack Query
+
+Added TanStack Query v^5.9.2 as data-fetching lib.
+
 ## Added React Hook Form + Zod
 
 Added RHF + Zod + Resolvers to create and manage forms.
