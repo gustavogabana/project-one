@@ -25,6 +25,9 @@ const RootLayout = () => (
       <Link to="/todos" className="[&.active]:font-bold">
         Todos
       </Link>
+      <Link to="/virtual" className="[&.active]:font-bold">
+        Virtual
+      </Link>
     </div>
     <hr />
     <Outlet />
