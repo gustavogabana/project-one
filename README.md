@@ -54,6 +54,11 @@ Added TanStack Router v1 Lib used for routing on React/Vite apps.
 
 Added TanStack Query v^5.9.2 as data-fetching lib.
 
+## Added TanStack Virtual
+
+Added TanStack Virtual ^3.13.18 to create the infinite feed using virtualization.
+To virtualize a particular div, use useVirtualizer. To virtualize the whole HTML page, use useWindowVirtualizer.
+
 ## Added React Hook Form + Zod
 
 Added RHF + Zod + Resolvers to create and manage forms.

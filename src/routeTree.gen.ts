@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PostsRouteRouteImport } from './routes/posts/route'
+import { Route as VirtualIndexRouteImport } from './routes/virtual/index'
 import { Route as TodosIndexRouteImport } from './routes/todos/index'
 import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as FormIndexRouteImport } from './routes/form/index'
@@ -21,6 +22,11 @@ import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
 const PostsRouteRoute = PostsRouteRouteImport.update({
   id: '/posts',
   path: '/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VirtualIndexRoute = VirtualIndexRouteImport.update({
+  id: '/virtual/',
+  path: '/virtual/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TodosIndexRoute = TodosIndexRouteImport.update({
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/form/': typeof FormIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/todos/': typeof TodosIndexRoute
+  '/virtual/': typeof VirtualIndexRoute
 }
 export interface FileRoutesByTo {
   '/posts/$postId': typeof PostsPostIdRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/form': typeof FormIndexRoute
   '/posts': typeof PostsIndexRoute
   '/todos': typeof TodosIndexRoute
+  '/virtual': typeof VirtualIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/form/': typeof FormIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/todos/': typeof TodosIndexRoute
+  '/virtual/': typeof VirtualIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/form/'
     | '/posts/'
     | '/todos/'
+    | '/virtual/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/posts/$postId'
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/form'
     | '/posts'
     | '/todos'
+    | '/virtual'
   id:
     | '__root__'
     | '/posts'
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/form/'
     | '/posts/'
     | '/todos/'
+    | '/virtual/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   CardIndexRoute: typeof CardIndexRoute
   FormIndexRoute: typeof FormIndexRoute
   TodosIndexRoute: typeof TodosIndexRoute
+  VirtualIndexRoute: typeof VirtualIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -137,6 +150,13 @@ declare module '@tanstack/react-router' {
       path: '/posts'
       fullPath: '/posts'
       preLoaderRoute: typeof PostsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/virtual/': {
+      id: '/virtual/'
+      path: '/virtual'
+      fullPath: '/virtual/'
+      preLoaderRoute: typeof VirtualIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/todos/': {
@@ -212,6 +232,7 @@ const rootRouteChildren: RootRouteChildren = {
   CardIndexRoute: CardIndexRoute,
   FormIndexRoute: FormIndexRoute,
   TodosIndexRoute: TodosIndexRoute,
+  VirtualIndexRoute: VirtualIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
