@@ -1,53 +1,50 @@
 import { memo } from "react";
-
-type ItemProps = {
-    data: {
-        id: number;
-        text: string;
-    }
-};
+import type { PhotoItem } from "@/queryOptions/createDataQueryOptions";
 
 /**
  * Item Card Component
  * Using React.memo to prevent unnecessary re-renders when 
  * scrolling through the virtual list.
  */
-const Item = memo(({ data }: ItemProps) => {
+const Item = memo(({ data }: { data: PhotoItem }) => {
     return (
-        /* Alterado bg-white para bg-red-50 e a borda para red-200 */
-        <div className="flex flex-col gap-2 p-4 bg-red-50 border border-red-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3">
-
-                {/* User Avatar Placeholder */}
-                <div className="h-10 w-10 rounded-full bg-linear-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
-                    {data.id % 99}
-                </div>
-                
-                <div className="flex flex-col">
-                    /* Ajustado o texto para um cinza mais escuro que combina com fundo quente */
-                    <span className="font-semibold text-gray-900">
-                        User Instance #{data.id}
-                    </span>
-                    <span className="text-xs text-red-600/70">
-                        Active now • ID: {data.id}
-                    </span>
-                </div>
+        <div className="group flex items-start gap-4 p-4 transition-all duration-200 hover:bg-red-50/50 rounded-2xl">
+            
+            <div className="relative shrink-0">
+                <img 
+                    src={data.thumbnailUrl} 
+                    alt="" 
+                    className="h-12 w-12 rounded-full object-cover ring-2 ring-red-100 transition-transform group-hover:scale-105"
+                />
+                <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green-500" />
             </div>
 
-            <p className="text-sm text-gray-700 leading-relaxed">
-                {data.text}
-            </p>
+            <div className="flex flex-col min-w-0">
+                <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-gray-900 truncate">
+                        User Instance {data.id}
+                    </span>
+                    <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-red-100 text-red-600">
+                        ALBUM {data.albumId}
+                    </span>
+                </div>
 
-            <div className="mt-2 flex gap-4">
-                <button className="text-xs font-medium text-red-700 hover:underline">
-                    View Profile
-                </button>
-                <button className="text-xs font-medium text-gray-400 hover:text-red-500">
-                    Dismiss
-                </button>
+                <p className="mt-1 text-sm text-gray-500 leading-snug line-clamp-2">
+                    {data.title}
+                </p>
+
+                <div className="mt-3 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button className="text-xs font-semibold text-red-600 transition-colors hover:text-red-800">
+                        View Details
+                    </button>
+                    <button className="text-xs font-semibold text-gray-400 transition-colors hover:text-gray-600">
+                        Dismiss
+                    </button>
+                </div>
             </div>
         </div>
     );
 });
 
+Item.displayName = 'Item';
 export default Item;
