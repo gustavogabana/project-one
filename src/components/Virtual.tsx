@@ -7,8 +7,7 @@ import { useRef } from "react";
 import Item from "./Item";
 
 function Virtual() {
-    const { data } = useQuery(createDataQueryOptions());
-
+    const { data, isLoading } = useQuery(createDataQueryOptions());
     const scrollRef = useRef<HTMLDivElement>(null);
     
     /**
@@ -19,18 +18,37 @@ function Virtual() {
      */
     // eslint-disable-next-line react-hooks/incompatible-library
     const virtualizer = useVirtualizer({
-        count: data!.length,
+        count: data?.length ?? 0,
         estimateSize: () => 100,
         getScrollElement: () => scrollRef.current,
-        // horizontal: true
+        overscan: 10,
     });
 
     const virtualItems = virtualizer.getVirtualItems();
 
+    if (isLoading) {
+        return (
+            <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
+                <div className="flex flex-col items-center gap-2">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-red-500 border-t-transparent" />
+                    <span className="text-red-500 font-medium animate-pulse">Loading API Data...</span>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div ref={scrollRef} className="h-[90dvh] w-[90dvh] overflow-auto">
-            <div className="relative" style={{ height: `${virtualizer.getTotalSize()}px` }}>
-                {/*When its horizontal the translateY need to be translateX*/}
+        <div className="flex h-screen w-screen items-center justify-center bg-gray-50 p-4">
+            
+            <div 
+                ref={scrollRef} 
+                className="h-[90dvh] w-full max-w-2xl overflow-auto bg-white rounded-3xl shadow-2xl border border-gray-200 scroll-smooth"
+            >
+                <div 
+                    className="relative w-full" 
+                    style={{ height: `${virtualizer.getTotalSize()}px` }}
+                >
+                    {/*When its horizontal the translateY need to be translateX*/}
                     <div 
                         className="absolute top-0 left-0 w-full"
                         // Moves the item to its calculated Y position in the list 
@@ -40,7 +58,7 @@ function Virtual() {
                             const card = data![index];
                             return (
                                 <div 
-                                    className="my-6" 
+                                    className="px-4 py-2"
                                     key={key} 
                                     data-index={index}
                                     // Measures actual element height after render for dynamic content
@@ -50,6 +68,7 @@ function Virtual() {
                                 </div>
                             );
                         })}
+                    </div>
                 </div>
             </div>
         </div>
