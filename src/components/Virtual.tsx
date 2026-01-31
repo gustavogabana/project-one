@@ -22,6 +22,7 @@ function Virtual() {
         estimateSize: () => 100,
         getScrollElement: () => scrollRef.current,
         overscan: 10,
+        useFlushSync: false,
     });
 
     const virtualItems = virtualizer.getVirtualItems();
