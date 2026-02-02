@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 function Navbar() {
     return (
         <>
-            <div className="p-2 flex gap-2">
+            <div className="navbar p-2 flex gap-2">
                 <Link to="/" className="[&.active]:font-bold">
                     Home
                 </Link>
