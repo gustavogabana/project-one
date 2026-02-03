@@ -13,7 +13,7 @@ type NavLink = {
 function Navbar() {
     const links: NavLink[] = [
         { to: "/", label: "Home" },
-        { to: "/about", label: "Sobre" },
+        { to: "/about", label: "About" },
         { to: "/posts", label: "Posts", search: { query: "" } },
         { to: "/virtual", label: "Virtual Feed" },
     ];
