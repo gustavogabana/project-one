@@ -1,3 +1,4 @@
+import { useThemeStore } from "@/store/useThemeStore";
 import { Link } from "@tanstack/react-router";
 
 type Query = {
@@ -11,6 +12,10 @@ type NavLink = {
 };
 
 function Navbar() {
+    const theme = useThemeStore((state) => state.theme);
+    const changeTheme = useThemeStore((state) => state.changeTheme);
+
+
     const links: NavLink[] = [
         { to: "/", label: "Home" },
         { to: "/about", label: "About" },
@@ -90,8 +95,8 @@ function Navbar() {
                 </button>
                 
                 {/* Zustand: This button will later trigger the theme or auth store state */}
-                <button className="btn btn-primary btn-sm rounded-full px-6 shadow-md hover:shadow-lg transition-all active:scale-95">
-                    Login
+                <button className="btn btn-primary btn-sm rounded-full px-6 shadow-md hover:shadow-lg transition-all active:scale-95" onClick={changeTheme}>
+                    {theme === "light" ? "Dark" : "Light"}
                 </button>
             </div>
         </nav>
