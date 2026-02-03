@@ -1,7 +1,8 @@
-import { useTheme } from "@/hooks/useTheme";
+import { useThemeStore } from "@/store/useThemeStore";
 
 function Home() {
-    const { theme, changeTheme } = useTheme();
+    const theme = useThemeStore((state) => state.theme);
+    const changeTheme = useThemeStore((state) => state.changeTheme);
 
     return (
         <div className="min-h-screen bg-white dark:bg-zinc-950 transition-colors duration-300 pt-50">

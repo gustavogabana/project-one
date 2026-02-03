@@ -67,6 +67,10 @@ Added RHF + Zod + Resolvers to create and manage forms.
 npm instal react-hook-form zod @hookform/resolvers
 ```
 
+## Added Zustand
+
+Added Zustand v^5.0.11 to use as the main state management solution to replace native context api.
+
 ## Added DaisyUI
 
 Added DaisyUI v5.5.14 as main UI lib.
