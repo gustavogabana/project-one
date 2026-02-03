@@ -69,7 +69,7 @@ npm instal react-hook-form zod @hookform/resolvers
 
 ## Added Zustand
 
-Added Zustand to use as the main state management solution to replace native context api.
+Added Zustand v^5.0.11 to use as the main state management solution to replace native context api.
 
 ## Added DaisyUI
 
