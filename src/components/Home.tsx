@@ -12,13 +12,13 @@ function Home() {
             </div>
 
             <button 
-            type="button" 
-            className="mx-auto block mt-4 cursor-pointer p-2.5 
-                        bg-slate-800 text-white rounded-md 
-                        hover:bg-slate-700 active:scale-95
-                        dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 
-                        transition-all"
-            onClick={changeTheme}
+                type="button" 
+                className="mx-auto block mt-4 cursor-pointer p-2.5 
+                            bg-slate-800 text-white rounded-md 
+                            hover:bg-slate-700 active:scale-95
+                            dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 
+                            transition-all"
+                onClick={changeTheme}
             >
             Change theme ({theme})
             </button>

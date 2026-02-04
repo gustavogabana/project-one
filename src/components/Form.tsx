@@ -3,11 +3,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from "zod";
 
 const professionalSchema = z.object({
-    name: z.string().min(3, "Nome muito curto"),
+    name: z.string().min(3, "Name's too short"),
     proofOfLife: z
         .custom<FileList>()
-        .refine((files) => files instanceof FileList && files.length > 0, "Video para avaliação é obrigatório")
-        .refine((files) => !files[0] || files[0].size <= 200 * 1024 * 1024, "O video deve ter menos de 200MB")
+        .refine((files) => files instanceof FileList && files.length > 0, "Video is required")
+        .refine((files) => !files[0] || files[0].size <= 200 * 1024 * 1024, "Video's maximum size's 200MB")
 });
 
 type ProfessionalData = z.infer<typeof professionalSchema>;
@@ -35,10 +35,10 @@ function Form() {
             <form onSubmit={handleSubmit(onSubmit)} 
                 className="w-full max-w-md flex flex-col gap-5 bg-white p-8 rounded-2xl shadow-xl border border-gray-200"
             >
-                <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">Cadastro Profissional</h2>
+                <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">Form</h2>
 
                 <div className="flex flex-col gap-1">
-                    <label className="text-sm font-semibold text-gray-700">Nome Artístico</label>
+                    <label className="text-sm font-semibold text-gray-700">Tag Name</label>
                     <input 
                         {...register("name")} 
                         placeholder="Ex: Ana Silva"
@@ -49,7 +49,7 @@ function Form() {
                 </div>
 
                 <div className="flex flex-col gap-1">
-                    <label className="text-sm font-semibold text-gray-700">Vídeo Prova de Vida</label>
+                    <label className="text-sm font-semibold text-gray-700">Proof of Life Video</label>
                     <input 
                         type="file" 
                         accept="video/*" 
@@ -68,11 +68,11 @@ function Form() {
                     className={`mt-2 w-full py-3 rounded-lg font-bold text-white transition-all
                         ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 active:scale-95'}`}
                 >
-                    {isSubmitting ? "Enviando Vídeo..." : "Finalizar Cadastro"}
+                    {isSubmitting ? "Sending video..." : "Submit form"}
                 </button>
 
                 <p className="text-[10px] text-gray-400 text-center italic">
-                    Ao finalizar, você concorda com nossos termos de curadoria.
+                    You agree with the firm privacy policy.
                 </p>
             </form>
         </div>
