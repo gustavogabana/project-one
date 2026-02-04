@@ -19,6 +19,7 @@ function Navbar() {
     const links: NavLink[] = [
         { to: "/", label: "Home" },
         { to: "/about", label: "About" },
+        { to: "/form", label: "Form" },
         { to: "/posts", label: "Posts", search: { query: "" } },
         { to: "/virtual", label: "Virtual Feed" },
     ];

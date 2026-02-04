@@ -50,6 +50,14 @@ Wraps the App component in main.tsx so that the data stored in the context is av
 
 Added TanStack Router v1 Lib used for routing on React/Vite apps.
 
+### Index Routes
+
+Index routes are file-routes that needs to have a index.tsx file in it to be referenced on the routing. If a route that is a file doesn't have the index.tsx file, that route extactly can't be accessed, but other routes (files .tsx such as example.tsx) can.
+
+### Layout Routes
+
+If a dir (file-route) have two or more children routes (files that are not the index.tsx file) and they need to have a common ground for whatever reason, a layout route (a route.tsx file) can be created and whatever is in it will be shown (that's why it's called layout route) in all the children routes. For this route to work, it need to be called route.tsx and it need to render the ```html <Oulet />``` component.
+
 ## Added TanStack Query
 
 Added TanStack Query v^5.9.2 as data-fetching lib.
