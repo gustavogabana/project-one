@@ -12,6 +12,7 @@ type NavLink = {
 };
 
 function Navbar() {
+    const version = import.meta.env.VITE_APP_VERSION;
     const theme = useThemeStore((state) => state.theme);
     const changeTheme = useThemeStore((state) => state.changeTheme);
 
@@ -65,6 +66,7 @@ function Navbar() {
                 <Link to="/" className="text-xl font-black tracking-tight hover:opacity-80 transition-opacity">
                     PRO<span className="text-primary">FEED</span>
                 </Link>
+                <span>v.{version}</span>
             </div>
 
             {/* CENTER: DESKTOP NAVIGATION LINKS */}
