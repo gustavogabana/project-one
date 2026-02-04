@@ -1,5 +1,3 @@
-"use no memo";
-
 import createDataQueryOptions from "@/queryOptions/createDataQueryOptions";
 import { useQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
