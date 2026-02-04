@@ -12,6 +12,7 @@ export default function createTodoQueryOptions(id: number, on: boolean) {
         queryKey: ["todos", id],
         queryFn: () => getTodos(id),
         placeholderData: (prevData) => prevData,
+        refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 5, // de facto cache to avoid background refetch
         enabled: on // When its true, the query runs, when its false, it doesnt / lazy query
     });

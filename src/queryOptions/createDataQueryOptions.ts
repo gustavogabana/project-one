@@ -18,6 +18,7 @@ export default function createDataQueryOptions() {
     return queryOptions({
         queryKey: ["photos"],
         queryFn: getPhotos,
+        refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 1 // 1 min cache
     });
 };

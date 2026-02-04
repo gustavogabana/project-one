@@ -4,7 +4,8 @@ import { useState } from "react";
 
 function Todo() {
     const [id, setId] = useState<number>(1);
-    const [on] = useState<boolean>(true);
+    const [on] = useState<boolean>(true); 
+    // here the state can be used to run the query (when its true) and fetch the data
 
     // useSuspenseQuery for garanteed returns, no undefined scenarios
     const { data, isLoading, isError, error, refetch } = useQuery(createTodoQueryOptions(id, on));
