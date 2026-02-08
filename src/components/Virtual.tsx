@@ -5,7 +5,8 @@ import { useRef } from "react";
 import Item from "./Item";
 
 function Virtual() {
-    const { data, isLoading } = useQuery(createDataQueryOptions());
+    // Limit results to avoid large network/memory usage by default
+    const { data, isLoading } = useQuery(createDataQueryOptions(500));
     const scrollRef = useRef<HTMLDivElement>(null);
     
     /**
@@ -36,6 +37,20 @@ function Virtual() {
         );
     }
 
+    // If the API returned an empty list, show a friendly placeholder
+    if (!data || data.length === 0) {
+        return (
+            <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
+                <div className="flex flex-col items-center gap-2">
+                    <span className="text-gray-500 font-medium">No items available</span>
+                </div>
+            </div>
+        );
+    }
+
+    // translate offset (guard when virtualItems is empty)
+    const translateOffset = virtualItems.length > 0 ? virtualItems[0].start : 0;
+
     return (
         <div className="flex h-screen w-screen items-center justify-center bg-gray-50 p-4">
             
@@ -43,15 +58,15 @@ function Virtual() {
                 ref={scrollRef} 
                 className="h-[90dvh] w-full max-w-2xl overflow-auto bg-white rounded-3xl shadow-2xl border border-gray-200 scroll-smooth"
             >
-                <div 
-                    className="relative w-full" 
+                <div
+                    className="relative w-full"
                     style={{ height: `${virtualizer.getTotalSize()}px` }}
                 >
                     {/*When its horizontal the translateY need to be translateX*/}
-                    <div 
+                    <div
                         className="absolute top-0 left-0 w-full"
                         // Moves the item to its calculated Y position in the list 
-                        style={{ transform: `translateY(${virtualItems[0]?.start ?? 0}px)` }}
+                        style={{ transform: `translateY(${translateOffset}px)` }}
                     >
                         {virtualItems.map(({ index, key }) => {
                             const card = data![index];
