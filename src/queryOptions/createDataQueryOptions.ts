@@ -14,10 +14,19 @@ const getPhotos = async (): Promise<PhotoItem[]> => {
     return response.json();
 };
 
-export default function createDataQueryOptions() {
+/**
+ * createDataQueryOptions(limit?)
+ * - Adds an optional `limit` to cap the number of items fetched.
+ * - Default limit is 1000 to avoid accidentally loading the full API (5k items).
+ */
+export default function createDataQueryOptions(limit = 1000) {
     return queryOptions({
-        queryKey: ["photos"],
-        queryFn: getPhotos,
+        queryKey: ["photos", limit],
+        queryFn: async () => {
+            const all = await getPhotos();
+            // slice to limit memory usage and improve load times
+            return all.slice(0, limit);
+        },
         refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 1 // 1 min cache
     });

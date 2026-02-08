@@ -12,7 +12,7 @@ type NavLink = {
 };
 
 function Navbar() {
-    const version = import.meta.env.VITE_APP_VERSION;
+    const version = import.meta.env.VITE_APP_VERSION ?? 'dev';
     const theme = useThemeStore((state) => state.theme);
     const changeTheme = useThemeStore((state) => state.changeTheme);
 
