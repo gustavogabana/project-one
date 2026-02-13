@@ -86,3 +86,43 @@ Added DaisyUI v5.5.14 as main UI lib.
 ## Configurations
 
 Disabled css.lint.unknownAtRules on VSCode.
+
+## CI / Pipeline
+
+This project includes a GitHub Actions workflow at `.github/workflows/pipeline.yaml` that performs basic validation and a simulated deploy. Summary of the workflow:
+
+- Name: `Basic Pipeline`
+- Triggers: `push` to `develop` and `main`, and `pull_request` targeting `main`.
+- Jobs:
+  - `basic-checkout`: displays environment info and checks out the repo.
+  - `verificate`: runs an HTML5 validator action and uploads validation logs on failure.
+  - `deploy`: a simulated deploy job that runs only on `main` after validation succeeds.
+
+Key notes:
+
+- The validator step uses `Cyb3r-Jak3/html5validator-action@v7.2.0` and is configured to check HTML and CSS (CSS check can be toggled).
+- The pipeline currently simulates a deploy by preparing a `deploy_folder` rather than performing a real production deployment — you can extend it to publish to GitHub Pages or another host.
+
+If you want, I can:
+
+- Add build and test steps to the pipeline (install dependencies, run `npm run build`, run a test suite).
+- Replace the simulated deploy with a real deployment (GitHub Pages, Netlify, Vercel) and add secrets handling.
+
+## Notable Recent Changes
+
+This section captures recent code changes and improvements discovered while scanning the project.
+
+- Virtual feed and data fetching
+  - `src/queryOptions/createDataQueryOptions.ts` now accepts an optional `limit` parameter (default: 1000) and includes `limit` in the query key to avoid loading the entire upstream dataset into memory.
+  - `src/components/Virtual.tsx` uses `createDataQueryOptions(500)` to cap the initial feed and improve load/memory behavior. The component now renders a user-friendly empty state and guards the translate offset calculation to avoid runtime errors when the virtual items list is empty.
+
+- Robustness and UX
+  - `src/components/Navbar.tsx` provides a fallback value `dev` for `import.meta.env.VITE_APP_VERSION`, so the UI won't display `undefined` when the env var is missing.
+  - `src/queryOptions/createTodoQueryOptions.ts` exposes `enabled` so queries can be run lazily, and uses `placeholderData` and longer `staleTime` to reduce unnecessary background refetches.
+
+- CI / Pipeline
+  - `.github/workflows/pipeline.yaml` (Basic Pipeline) was added/updated: it runs a quick checkout & environment display, runs an HTML5 validator, and includes a simulated deploy job that prepares artifacts in a `deploy_folder`. The validator step uploads logs on failure for debugging.
+
+- Small dev ergonomics
+  - `src/components/Virtual.tsx` adds a loading screen with a spinner and a clear message while API data is fetched.
+  - Various files use TanStack libraries (`react-query`, `react-virtual`, `react-router`) with file-based route conventions under `src/routes`.
