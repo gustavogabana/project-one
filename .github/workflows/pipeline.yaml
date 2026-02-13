@@ -1,9 +1,8 @@
 name: Basic Pipeline
 run-name: ${{ github.actor }} - Pipeline Run #${{ github.run_number }} - ${{ github.workflow }}
 
-# Permissions needed for the GITHUB_TOKEN to interact with the repo
 permissions:
-  contents: write    # Required to push changes (like to gh-pages)
+  contents: read
   pull-requests: read
 
 on:
@@ -13,8 +12,7 @@ on:
     branches: ["main"]
 
 jobs:
-  # JOB 1: System Check and Context Exploration
-  # This job acts as a "Sanity Check" to display environment information.
+  # JOB 1: Environment Check
   basic-checkout:
     runs-on: ubuntu-latest
     steps:
@@ -33,45 +31,72 @@ jobs:
           echo "Repository ${{ github.repository }} cloned successfully."
           echo "Current Job Status: ${{ job.status }}"
 
-  # JOB 2: Validation and Quality Control
-  # This job ensures the HTML/CSS code is valid before any further steps.
+  # JOB 2: Build and Validation for React
   verificate:
     runs-on: ubuntu-latest
-    needs: basic-checkout # This job only starts if 'basic-checkout' succeeds
+    needs: basic-checkout
     steps:
-      - name: Run HTML5 Validator
-        # Checks syntax of HTML files. CSS validation is disabled as per your config.
+      - name: Checkout code
+        uses: actions/checkout@v6.0.2
+
+      # React needs Node.js to run. This step sets up the environment.
+      - name: Setup Node.js
+        uses: actions/setup-node@v6.2.0
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      # Install the packages listed in your package.json
+      - name: Install dependencies
+        run: npm install
+
+      # This is the "real" validator for React. If the code has syntax errors, the build will fail.
+      - name: Build Project
+        run: npm run build
+
+      # Save the generated files (usually in 'dist' or 'build' folder)
+      - name: Upload Build Artifacts
+        if: success()
+        uses: actions/upload-artifact@v6.0.0
+        with:
+          name: production-files
+          # IMPORTANT: 'dist' (Vite)
+          path: dist/ 
+          retention-days: 7
+
+      # In case of failure, we can still try to run the HTML5Validator on the public folder
+      - name: HTML5Validator (Public Folder Only)
+        if: failure()
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
-          root: './'
+          root: './public'
           css: true
           skip_git_check: true
           format: json
-          extra: '--match *.html'
 
-      - name: Upload Validation Logs
-        # Ensures logs are only saved if the validator finds errors
-        if: failure()
-        uses: actions/upload-artifact@v6.0.0
-        with:
-          name: validation-report
-          path: html5validator.log
-          retention-days: 7 # Kept for 7 days to save storage space
-
-  # JOB 3: Manual Deployment (Simulation)
-  # This job simulates a manual push to a deployment branch.
+  # JOB 3: Deployment Simulation
   deploy:
     runs-on: ubuntu-latest
     needs: verificate
-    # Only runs on the 'main' branch to avoid deploying development code
+    # Only runs on the 'main' branch
     if: github.ref == 'refs/heads/main'
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.2
+
+      # Download the files we built in the previous job
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: production-files
+          path: ./ready_to_deploy
+
       - name: Simulated Manual Deploy
         run: |
-          echo "Starting Manual Deploy Process..."
-          mkdir -p deploy_folder
-          cp *.html deploy_folder/
-          echo "Deployment artifacts prepared in deploy_folder/"
+          echo "Starting Manual Deploy Process for React App..."
+          # Listing files to confirm the build is correct
+          ls -R ./ready_to_deploy
+          echo "Deployment successful!"
           
       - name: Deploy Success Message
-        run: echo "Code from ${{ github.ref }} successfully validated and 'deployed'!"
+        run: echo "Code from ${{ github.ref }} successfully validated, built and 'deployed'!"
