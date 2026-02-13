@@ -45,6 +45,7 @@ jobs:
         with:
           root: './'
           css: true
+          skip_git_check: true
           format: json
 
       - name: Upload Validation Logs
