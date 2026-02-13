@@ -47,6 +47,7 @@ jobs:
           css: true
           skip_git_check: true
           format: json
+          extra: '--match *.html'
 
       - name: Upload Validation Logs
         # Ensures logs are only saved if the validator finds errors
